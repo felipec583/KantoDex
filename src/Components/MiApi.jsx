@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-const MiApi = ({ newlist, setNewList, pokemonList, setPokemonList }) => {
+const MiApi = ({ newlist, setNewList, pokemonList, setPokemonList, filteredPkmn }) => {
   const [loading, setLoading] = useState(true);
 
   async function getPokemonList() {
@@ -52,7 +52,7 @@ const MiApi = ({ newlist, setNewList, pokemonList, setPokemonList }) => {
             {/* row  */}
 
             {newlist &&
-              newlist.map((pkmn) => {
+              filteredPkmn.map((pkmn) => {
                 return (
                   <tr className="hover" key={pkmn?.id}>
                     <th>{pkmn?.id}</th>
@@ -60,6 +60,7 @@ const MiApi = ({ newlist, setNewList, pokemonList, setPokemonList }) => {
                       <img src={pkmn?.sprites["front_default"]} alt="" />
                     </td>
                     <td>{pkmn?.name.toUpperCase()}</td>
+                    <td>{pkmn?.types[0].type?.name}</td>
                   </tr>
                 );
               })}

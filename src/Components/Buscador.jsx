@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
 
-const Buscador = () => {
+const Buscador = ({ newList, setFilteredData }) => {
   const [value, setValue] = useState("");
-/*   useEffect(() => {
-    console.log(value);
-  }, [value]) */
+  const copy = [...newList];
+  const filteredPokemonList = copy.filter((pkmn) => {
+    return value === ""
+      ? copy
+      : pkmn?.name.includes(value) ||
+          pkmn?.types[0].type?.name.toLowerCase().includes(value.toLowerCase());
+  });
+
+  useEffect(() => {
+    setFilteredData(filteredPokemonList);
+    console.log(filteredPokemonList);
+  }, [value]);
   return (
     <>
       <div className="flex gap-10">

@@ -8,18 +8,21 @@ import Buscador from "./Components/Buscador";
 const App = () => {
   const [pokemonData, setPokemonData] = useState([]);
   const [pokemonList, setPokemonList] = useState([]);
-  console.log(pokemonList);
-  console.log(pokemonData);
+  const [filteredData, setFilteredData] = useState([]);
   return (
     <>
       <NavBar />
       <Hero />
-      <Buscador />
+      <Buscador
+        newList={pokemonData}
+        setFilteredData={setFilteredData}
+      />
       <MiApi
         newlist={pokemonData}
         setNewList={setPokemonData}
         pokemonList={pokemonList}
         setPokemonList={setPokemonList}
+        filteredPkmn={filteredData}
       />
     </>
   );
