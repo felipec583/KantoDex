@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0.2rem 0.5rem;
+  text-align: center;
+}
+
+.btn {
+  @apply rounded-full;
+}
+
+thead {
+  position: sticky;
+  top: 0;
+}
