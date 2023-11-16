@@ -6,23 +6,22 @@ import Hero from "./Components/Hero";
 import MiApi from "./Components/MiApi";
 import Buscador from "./Components/Buscador";
 const App = () => {
-  const [pokemonData, setPokemonData] = useState([]);
-  const [pokemonList, setPokemonList] = useState([]);
+  const [pokemonDataList, setPokemonDataList] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   return (
     <>
       <NavBar />
       <Hero />
       <Buscador
-        newList={pokemonData}
+        pokemonDataList={pokemonDataList}
         setFilteredData={setFilteredData}
+        filteredData={filteredData}
       />
       <MiApi
-        newlist={pokemonData}
-        setNewList={setPokemonData}
-        pokemonList={pokemonList}
-        setPokemonList={setPokemonList}
+        pokemonDataList={pokemonDataList}
+        setPokemonDataList={setPokemonDataList}
         filteredPkmn={filteredData}
+        setFilteredData={setFilteredData}
       />
     </>
   );

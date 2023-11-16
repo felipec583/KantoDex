@@ -1,34 +1,57 @@
 import React, { useEffect, useState } from "react";
 
-const Buscador = ({ newList, setFilteredData }) => {
+const Buscador = ({ pokemonDataList, setFilteredData }) => {
   const [value, setValue] = useState("");
-  const copy = [...newList];
-  const filteredPokemonList = copy.filter((pkmn) => {
-    return value === ""
-      ? copy
-      : pkmn?.name.includes(value) ||
-          pkmn?.types[0].type?.name.toLowerCase().includes(value.toLowerCase());
-  });
 
+  function handleInputChange(e) {
+    const inputSearchValue = e.target.value;
+    const whitespaceRegex = /\s/;
+    if (!whitespaceRegex.test(inputSearchValue)) {
+      setValue(inputSearchValue);
+    }
+  }
+
+  const copy = [...pokemonDataList];
+  const filteredPokemonList = copy.filter((pkmn) => {
+    return value === "" ? copy : pkmn?.name.includes(value.toLowerCase());
+  });
   useEffect(() => {
     setFilteredData(filteredPokemonList);
-    console.log(filteredPokemonList);
+    console.log(filteredPokemonList[0]);
   }, [value]);
   return (
     <>
-      <div className="flex gap-10">
+      <div className="flex gap-6">
         <input
           type="text"
           id="searchbar"
           placeholder="Escribe nombre de pokémon"
           className="input input-bordered w-full"
-          onChange={(e) => {
-            setValue(e.target.value);
+          onChange={handleInputChange}
+          value={value}
+          onKeyDown={(e) => {
+            e.key.charCodeAt(0) !== " ";
           }}
         />
+        <label htmlFor="my_modal_6" className="btn">
+          Ver datos
+        </label>
+
+        {/* Put this part before </body> tag */}
+        <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+        <div className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Hello!</h3>
+            <p className="py-4">This modal works with a hidden checkbox!</p>
+            <div className="modal-action">
+              <label htmlFor="my_modal_6" className="btn">
+                Close!
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
 };
-
 export default Buscador;

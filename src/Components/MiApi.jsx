@@ -1,69 +1,115 @@
 import { useEffect, useState } from "react";
+import { FaSortUp } from "react-icons/fa";
+import { TiArrowSortedDown } from "react-icons/ti";
+import { VscDebugRestart } from "react-icons/vsc";
 import axios from "axios";
-const MiApi = ({ newlist, setNewList, pokemonList, setPokemonList, filteredPkmn }) => {
+const MiApi = ({
+  pokemonDataList,
+  setPokemonDataList,
+  filteredPkmn,
+  setFilteredData,
+}) => {
   const [loading, setLoading] = useState(true);
+  const [isSorted, setIsSorted] = useState(null);
 
   async function getPokemonList() {
     try {
       const res = await axios.get(
         `https://pokeapi.co/api/v2/pokemon?limit=151`
       );
-      setPokemonList(res.data.results);
-      setLoading(false);
-      console.log(pokemonList);
-      pokemonList.forEach((pokemon) => {
-        getPokemonData(pokemon, request);
+
+      const pokemonList = res.data?.results;
+      const TransformedPkmList = pokemonList.map((pkm, index) => {
+        return { ...pkm, id: index + 1 };
       });
-      console.log(request);
+      return TransformedPkmList;
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function getPokemonData(pokemon) {
-    try {
-      let pokemonUrl = pokemon.url;
-      const res = await axios.get(pokemonUrl);
-      setNewList((prevList) => [...prevList, res.data]);
-    } catch (error) {
-      console.log(error);
+  async function getTransformedList() {
+    const TransformedPkmList = await getPokemonList();
+    setLoading(false);
+    setPokemonDataList(TransformedPkmList);
+    setFilteredData(TransformedPkmList);
+  }
+
+  function sortNamesAlphabetically() {
+    const sorted = filteredPkmn.sort((first, second) => {
+      const fName = first?.name;
+      const sName = second?.name;
+
+      if (fName.localeCompare(sName) < 0) return -1;
+      else if (fName.localeCompare(sName) > 0) return 1;
+      else if (fName.localeCompare(sName) == 0) return 0;
+    });
+    if (!isSorted) {
+      setIsSorted(true);
+      setFilteredData(sorted);
+
+      return;
+    } else {
+      setIsSorted(false);
+      setFilteredData(sorted.reverse());
     }
   }
-  const request = [];
 
+  async function resetListOrder() {
+    const TransformedPkmList = await getPokemonList();
+    setFilteredData(TransformedPkmList);
+  }
   useEffect(() => {
-    getPokemonList();
+    getTransformedList();
+    console.log(isSorted);
   }, [loading]);
   return (
     <>
       {loading && <p>Loading...</p>}
       <div className="overflow-auto h-60 my-3">
-        <table className="table table-pin-cols w-full">
-          {/* head */}
-          <thead>
+        <table className="table table-zebra  w-full">
+          <thead className="backdrop-blur-sm bg-white/40">
             <tr>
               <th>N</th>
               <th>Vista</th>
-              <th>Pokemon</th>
-              <th>Tipo</th>
+              <th className="sort-col">
+                {!isSorted ? (
+                  <FaSortUp
+                    size={25}
+                    className="arrow"
+                    onClick={sortNamesAlphabetically}
+                  />
+                ) : (
+                  <TiArrowSortedDown
+                    size={25}
+                    className="arrow"
+                    onClick={sortNamesAlphabetically}
+                  />
+                )}
+                <VscDebugRestart
+                  size={25}
+                  className="arrow"
+                  onClick={resetListOrder}
+                />
+                Pokemon
+              </th>
             </tr>
           </thead>
           <tbody>
-            {/* row  */}
-
-            {newlist &&
-              filteredPkmn.map((pkmn) => {
-                return (
-                  <tr className="hover" key={pkmn?.id}>
-                    <th>{pkmn?.id}</th>
-                    <td>
-                      <img src={pkmn?.sprites["front_default"]} alt="" />
-                    </td>
-                    <td>{pkmn?.name.toUpperCase()}</td>
-                    <td>{pkmn?.types[0].type?.name}</td>
-                  </tr>
-                );
-              })}
+            {filteredPkmn.map((pkmn) => {
+              return (
+                <tr className="hover" key={pkmn?.id}>
+                  <th>{pkmn?.id}</th>
+                  <td>
+                    <img
+                      src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pkmn?.id}.png`}
+                      alt=""
+                    />
+                  </td>
+                  <td>{pkmn?.name.toUpperCase()}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
