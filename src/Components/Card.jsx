@@ -39,14 +39,14 @@ const Card = ({ selectedPokemon, isModalOpen, setIsModalOpen }) => {
             className="pkm-img"
           />
           <p>Altura: {pokemon?.height}</p>
-          <p>
-            {
-              pokemon?.types?.map((type) => {
-                {
-                  return <span key={getId()}>{type?.name}</span>;
-                }
-              })}
-          </p>
+          <ul className="flex gap-2">
+            Tipo :
+            {pokemon?.types?.map((type) => {
+              {
+                return <li key={getId()}>{type?.type?.name}</li>;
+              }
+            })}
+          </ul>
           <div className="modal-action">
             <label htmlFor="my_modal_6" className="btn" onClick={handleClick}>
               Cerrar
