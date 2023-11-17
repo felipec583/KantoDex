@@ -3,7 +3,7 @@ const Hero = ({ inputRef }) => {
     <div
       className="hero min-h-screen my-2 rounded-box"
       style={{
-        backgroundImage: "url(../src/assets/hero-img.png)",
+        backgroundImage: "url(/hero-img.png)",
 
         backgroundSize: "repeat",
       }}
