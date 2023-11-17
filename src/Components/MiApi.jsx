@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FaSortUp } from "react-icons/fa";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { VscDebugRestart } from "react-icons/vsc";
+import Card from "./Card";
 import axios from "axios";
 const MiApi = ({
   pokemonDataList,
@@ -11,6 +12,8 @@ const MiApi = ({
 }) => {
   const [loading, setLoading] = useState(true);
   const [isSorted, setIsSorted] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
 
   async function getPokemonList() {
     try {
@@ -47,7 +50,6 @@ const MiApi = ({
     if (!isSorted) {
       setIsSorted(true);
       setFilteredData(sorted);
-
       return;
     } else {
       setIsSorted(false);
@@ -59,14 +61,37 @@ const MiApi = ({
     const TransformedPkmList = await getPokemonList();
     setFilteredData(TransformedPkmList);
   }
+
+  function handleClick(id) {
+    setSelectedPokemon(id);
+    setIsModalOpen(true);
+    console.log(isModalOpen);
+  }
+
+  /*   async function getData(id) {
+    try {
+      const data = await getPokemon(id);
+      setPokeData(data);
+      console.log(pokeData);
+    } catch (error) {
+      console.log(error);
+    }
+  } */
   useEffect(() => {
     getTransformedList();
     console.log(isSorted);
   }, [loading]);
   return (
     <>
+      {isModalOpen && (
+        <Card
+          selectedPokemon={selectedPokemon}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
+      )}
       {loading && <p>Loading...</p>}
-      <div className="overflow-auto h-60 my-3">
+      <div className="overflow-auto my-3 table-cont">
         <table className="table table-zebra  w-full">
           <thead className="backdrop-blur-sm bg-white/40">
             <tr>
@@ -107,6 +132,17 @@ const MiApi = ({
                     />
                   </td>
                   <td>{pkmn?.name.toUpperCase()}</td>
+                  <td>
+                    <label
+                      className="btn bg-red-world text-white hover:bg-boston-red"
+                      htmlFor="my_modal_6"
+                      onClick={() => {
+                        handleClick(pkmn?.id);
+                      }}
+                    >
+                      Ver datos
+                    </label>
+                  </td>
                 </tr>
               );
             })}
@@ -118,3 +154,4 @@ const MiApi = ({
 };
 
 export default MiApi;
+

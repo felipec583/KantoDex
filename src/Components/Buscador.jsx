@@ -29,19 +29,16 @@ const Buscador = ({ pokemonDataList, setFilteredData }) => {
           type="text"
           id="searchbar"
           placeholder="Escribe nombre de pokémon"
-          className="input input-bordered w-full join-item"
+          className="input input-bordered w-full"
           onChange={handleInputChange}
           value={value}
           onKeyDown={(e) => {
             e.key.charCodeAt(0) !== " ";
           }}
         />
-        <label htmlFor="my_modal_6" className="btn rounded join-item">
-          Ver datos
-        </label>
-        <Card />
       </div>
     </>
   );
 };
 export default Buscador;
+

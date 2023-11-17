@@ -5,6 +5,7 @@ import NavBar from "./Components/NavBar";
 import Hero from "./Components/Hero";
 import MiApi from "./Components/MiApi";
 import Buscador from "./Components/Buscador";
+import Footer from "./Components/Footer";
 const App = () => {
   const [pokemonDataList, setPokemonDataList] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -23,9 +24,9 @@ const App = () => {
         filteredPkmn={filteredData}
         setFilteredData={setFilteredData}
       />
+      <Footer />
     </>
   );
 };
 
 export default App;
-
