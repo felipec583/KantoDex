@@ -1,4 +1,3 @@
-import React from "react";
 import { MdCatchingPokemon } from "react-icons/md";
 
 const NavBar = () => {
@@ -10,15 +9,20 @@ const NavBar = () => {
         </h2>
       </div>
       <div className="navbar-center gap-2">
-        <a className="btn bg-cerulean-blue border-none text-white hover:bg-amber-400">
-          Home
-        </a>
-        <a className="btn  bg-cerulean-blue border-none  text-white  hover:bg-amber-400">
-          Buscar pokémon
-        </a>
-        <a className="btn   bg-cerulean-blue border-none  text-white  hover:bg-amber-400">
-          Lista de pkmn
-        </a>
+        <div className="join">
+          <a
+            className="btn join-item  bg-cerulean-blue border-none  text-white  hover:bg-amber-400"
+            href={"#tablon"}
+          >
+            Lista
+          </a>
+          <a
+            className="btn join-item  bg-cerulean-blue border-none  text-white  hover:bg-amber-400"
+            href={"#footer-comp"}
+          >
+            Contáctanos
+          </a>
+        </div>
       </div>
       <div className="navbar-end">
         <MdCatchingPokemon size={50} />
@@ -28,3 +32,4 @@ const NavBar = () => {
 };
 
 export default NavBar;
+

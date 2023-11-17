@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Card from "./Card";
-const Buscador = ({ pokemonDataList, setFilteredData }) => {
+import { useEffect, useState } from "react";
+const Buscador = ({ pokemonDataList, setFilteredData, inputRef }) => {
   const [value, setValue] = useState("");
 
   function handleInputChange(e) {
@@ -17,7 +16,6 @@ const Buscador = ({ pokemonDataList, setFilteredData }) => {
   });
   useEffect(() => {
     setFilteredData(filteredPokemonList);
-    console.log(filteredPokemonList[0]);
   }, [value]);
   return (
     <>
@@ -35,6 +33,7 @@ const Buscador = ({ pokemonDataList, setFilteredData }) => {
           onKeyDown={(e) => {
             e.key.charCodeAt(0) !== " ";
           }}
+          ref={inputRef}
         />
       </div>
     </>

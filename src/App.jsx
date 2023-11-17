@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import { useState, useRef } from "react";
 import "./App.css";
 import NavBar from "./Components/NavBar";
 import Hero from "./Components/Hero";
@@ -9,17 +8,18 @@ import Footer from "./Components/Footer";
 const App = () => {
   const [pokemonDataList, setPokemonDataList] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const inputRef = useRef(null);
   return (
     <>
       <NavBar />
-      <Hero />
+      <Hero inputRef={inputRef} />
       <Buscador
         pokemonDataList={pokemonDataList}
         setFilteredData={setFilteredData}
         filteredData={filteredData}
+        inputRef={inputRef}
       />
       <MiApi
-        pokemonDataList={pokemonDataList}
         setPokemonDataList={setPokemonDataList}
         filteredPkmn={filteredData}
         setFilteredData={setFilteredData}
@@ -30,3 +30,4 @@ const App = () => {
 };
 
 export default App;
+

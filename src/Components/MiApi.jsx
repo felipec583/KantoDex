@@ -4,12 +4,7 @@ import { TiArrowSortedDown } from "react-icons/ti";
 import { VscDebugRestart } from "react-icons/vsc";
 import Card from "./Card";
 import axios from "axios";
-const MiApi = ({
-  pokemonDataList,
-  setPokemonDataList,
-  filteredPkmn,
-  setFilteredData,
-}) => {
+const MiApi = ({ setPokemonDataList, filteredPkmn, setFilteredData }) => {
   const [loading, setLoading] = useState(true);
   const [isSorted, setIsSorted] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -65,21 +60,9 @@ const MiApi = ({
   function handleClick(id) {
     setSelectedPokemon(id);
     setIsModalOpen(true);
-    console.log(isModalOpen);
   }
-
-  /*   async function getData(id) {
-    try {
-      const data = await getPokemon(id);
-      setPokeData(data);
-      console.log(pokeData);
-    } catch (error) {
-      console.log(error);
-    }
-  } */
   useEffect(() => {
     getTransformedList();
-    console.log(isSorted);
   }, [loading]);
   return (
     <>
@@ -90,8 +73,9 @@ const MiApi = ({
           setIsModalOpen={setIsModalOpen}
         />
       )}
+
       {loading && <p>Loading...</p>}
-      <div className="overflow-auto my-3 table-cont">
+      <div className="overflow-auto my-3 table-cont" id="tablon">
         <table className="table table-zebra  w-full">
           <thead className="backdrop-blur-sm bg-white/40">
             <tr>
@@ -135,7 +119,7 @@ const MiApi = ({
                   <td>
                     <label
                       className="btn bg-red-world text-white hover:bg-boston-red"
-                      htmlFor="my_modal_6"
+                      htmlFor={isModalOpen ? "my_modal_6" : undefined}
                       onClick={() => {
                         handleClick(pkmn?.id);
                       }}
