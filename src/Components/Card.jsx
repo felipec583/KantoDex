@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-const Card = ({ selectedPokemon, isModalOpen, setIsModalOpen }) => {
+const Card = ({ selectedPokemon, setIsModalOpen }) => {
   const [pokemon, setPokemon] = useState([]);
   const [loading, setLoading] = useState(true);
   async function getPokemon(id) {
@@ -18,8 +18,8 @@ const Card = ({ selectedPokemon, isModalOpen, setIsModalOpen }) => {
     }
   }
   useEffect(() => {
-    if (isModalOpen) getPokemon(selectedPokemon);
-  }, [isModalOpen]);
+    getPokemon(selectedPokemon);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function handleClick() {
     setIsModalOpen(false);
@@ -53,7 +53,7 @@ const Card = ({ selectedPokemon, isModalOpen, setIsModalOpen }) => {
                 alt="pokemon"
                 className="pkm-img"
               />
-              <p>Altura: {pokemon?.height}</p>
+              <p>Altura: {(pokemon?.height * 10) / 100} m</p>
               <ul className="flex gap-3 align-middle justify-center">
                 Tipo :
                 {pokemon?.types?.map((type) => {

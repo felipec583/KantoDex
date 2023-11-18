@@ -63,7 +63,7 @@ const MiApi = ({ setPokemonDataList, filteredPkmn, setFilteredData }) => {
   }
   useEffect(() => {
     getTransformedList();
-  }, [loading]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <>
       {isModalOpen && (

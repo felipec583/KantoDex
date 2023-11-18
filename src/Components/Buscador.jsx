@@ -12,11 +12,12 @@ const Buscador = ({ pokemonDataList, setFilteredData, inputRef }) => {
 
   const copy = [...pokemonDataList];
   const filteredPokemonList = copy.filter((pkmn) => {
-    return value === "" ? copy : pkmn?.name.includes(value.toLowerCase());
+    return value === "" ? copy : pkmn?.name.startsWith(value.toLowerCase());
   });
   useEffect(() => {
     setFilteredData(filteredPokemonList);
-  }, [value]);
+  }, [value]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <>
       <div
