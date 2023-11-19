@@ -11,7 +11,7 @@ const Footer = () => {
           Buscador de Pokémon de Kanto. <br />
           Hecho por Felipe Castillo
         </p>
-        <p>Copyright © 2023 - All right reserved</p>
+        <p>Copyright © 2023 - All rights reserved</p>
       </aside>
       <nav>
         <div className="grid grid-flow-col gap-4">
